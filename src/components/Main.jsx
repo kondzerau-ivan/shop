@@ -3,10 +3,12 @@ import { API_KEY, API_URL } from "../config";
 
 import Preloader from "./Preloader";
 import Products from "./Products";
+import Cart from "./Cart";
 
 export default function Main() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState([]);
 
   useEffect(function getProducts() {
     fetch(API_URL, {
@@ -24,6 +26,7 @@ export default function Main() {
   return (
     <main>
       <div className="container">
+        <Cart quantity={order.length}/>
         {loading ? <Preloader /> : <Products products={products} />}
       </div>
     </main>

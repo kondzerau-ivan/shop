@@ -24,3 +24,29 @@ body {
   gap: 1rem;
 }
 
+.cart {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 60px;
+  min-height: 60px;
+  padding: 1rem;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .cart {
+    top: 5rem;
+    right: 5rem;
+    bottom: unset;
+  }
+}
