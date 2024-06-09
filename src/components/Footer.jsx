@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="page-footer">
+    <footer className="page-footer blue-grey lighten-1">
       <div className="footer-copyright">
         <div className="container">
           © 2014 Copyright Text

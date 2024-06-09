@@ -1,7 +1,7 @@
 export default function Header() {
   return (
     <header>
-      <nav>
+      <nav className="blue-grey lighten-1">
         <div className="container">
           <div className="nav-wrapper">
             <a href="#" className="brand-logo">
