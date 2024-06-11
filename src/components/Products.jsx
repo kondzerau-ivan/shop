@@ -1,13 +1,13 @@
 import Product from "./Product";
 
 export default function Products(props) {
-  const {products = []} = props;
+  const {products = [], addToCart = Function.prototype} = props;
 
   if (!products) return <h2>Nothing foud!</h2>
   return(
     <div className="products">
       {products.map(product => (
-        <Product key={product.id} {...product} />
+        <Product key={product.id} {...product} addToCart={addToCart} />
       ))}
     </div>
   );

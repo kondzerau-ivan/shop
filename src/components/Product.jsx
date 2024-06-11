@@ -1,11 +1,17 @@
 export default function Product(props) {
-  const { id, name, price, image } = props;
+  const { id, name, price, image, addToCart = Function.prototype } = props;
 
   return (
     <div className="card">
-      <div id={id} className="card-image">
+      <div className="card-image">
         <img src={image} alt={name}/>
-        <button className="btn-floating halfway-fab waves-effect waves-light blue-grey lighten-1">
+        <button className="btn-floating halfway-fab waves-effect waves-light blue-grey lighten-1" onClick={() => {
+          addToCart({
+            id,
+            name,
+            price
+          })
+        }}>
           <i className="material-icons">add</i>
         </button>
       </div>
