@@ -4,11 +4,13 @@ import { API_KEY, API_URL } from "../config";
 import Preloader from "./Preloader";
 import Products from "./Products";
 import Cart from "./Cart";
+import CartList from "./CartList";
 
 export default function Main() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState([]);
+  const [isCartShow, setCartShow] = useState(false);
 
   const addToCart = (product) => {
     const productIndex = order.findIndex(
@@ -35,6 +37,10 @@ export default function Main() {
     }
   };
 
+  const handleCartShow = () => {
+    setCartShow(!isCartShow);
+  }
+
   useEffect(function getProducts() {
     fetch(API_URL, {
       headers: {
@@ -51,7 +57,8 @@ export default function Main() {
   return (
     <main>
       <div className="container">
-        <Cart quantity={order.length} />
+        <Cart quantity={order.length} handleCartShow={handleCartShow} />
+        {isCartShow && <CartList order={order} />}
         {loading ? <Preloader /> : <Products products={products} addToCart={addToCart} />}
       </div>
     </main>
