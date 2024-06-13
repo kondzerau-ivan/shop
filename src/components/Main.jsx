@@ -49,7 +49,7 @@ export default function Main() {
     })
       .then((response) => response.json())
       .then((data) => {
-        data.featured && setProducts(data.featured);
+        data.featured && setProducts(data.featured.slice(0, 16));
         setLoading(false);
       });
   }, []);
