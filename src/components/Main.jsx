@@ -58,7 +58,7 @@ export default function Main() {
     <main>
       <div className="container">
         <Cart quantity={order.length} handleCartShow={handleCartShow} />
-        {isCartShow && <CartList order={order} />}
+        {isCartShow && <CartList order={order} handleCartShow={handleCartShow} />}
         {loading ? <Preloader /> : <Products products={products} addToCart={addToCart} />}
       </div>
     </main>
