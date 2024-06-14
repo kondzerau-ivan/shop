@@ -1,14 +1,14 @@
 import CartItem from "./CartItem";
 
 export default function CartList(props) {
-  const { order = [], handleCartShow = Function.prototype } = props;
+  const { order = [], handleCartShow = Function.prototype, removeFromCart = Function.prototype } = props;
   const totalPrice = order.reduce((total, product) => total + product['price'] * product.quantity, 0);
   return (
     <div className="cart-list-wrapper">
       <ul className="collection cart__list">
         <li className="collection-item active red darken-4">Cart</li>
         {order.length ? (
-          order.map((item) => <CartItem key={item.id} {...item} />)
+          order.map((item) => <CartItem key={item.id} {...item} removeFromCart={removeFromCart} />)
         ) : (
           <li className="collection-item">Cart is empty!</li>
         )}

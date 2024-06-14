@@ -54,6 +54,8 @@ body {
 
   width: 50rem;
   max-width: 95%;
+
+  animation: show 500ms ease-in-out;
 }
 
 .cart-close {
@@ -73,6 +75,17 @@ body {
 .cart-item-close:hover,
 .cart-close:hover {
   cursor: pointer;
+}
+
+@keyframes show {
+  from {
+    top: 70%;
+    opacity: 0;
+  }
+  to {
+    top: 50%;
+    opacity: 1;
+  }
 }
 
 @media (min-width: 768px) {

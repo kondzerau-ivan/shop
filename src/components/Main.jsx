@@ -12,7 +12,7 @@ export default function Main() {
   const [order, setOrder] = useState([]);
   const [isCartShow, setCartShow] = useState(false);
 
-  const addToCart = (product) => {
+  const addToCart = product => {
     const productIndex = order.findIndex(
       (orderProduct) => orderProduct.id === product.id
     );
@@ -37,6 +37,11 @@ export default function Main() {
     }
   };
 
+  const removeFromCart = productId => {
+    const newOrder = order.filter(product => product.id !== productId);
+    setOrder(newOrder);
+  }
+
   const handleCartShow = () => {
     setCartShow(!isCartShow);
   }
@@ -58,7 +63,7 @@ export default function Main() {
     <main>
       <div className="container">
         <Cart quantity={order.length} handleCartShow={handleCartShow} />
-        {isCartShow && <CartList order={order} handleCartShow={handleCartShow} />}
+        {isCartShow && <CartList order={order} handleCartShow={handleCartShow} removeFromCart={removeFromCart}/>}
         {loading ? <Preloader /> : <Products products={products} addToCart={addToCart} />}
       </div>
     </main>
