@@ -12,7 +12,7 @@ export default function Main() {
   const [order, setOrder] = useState([]);
   const [isCartShow, setCartShow] = useState(false);
 
-  const addToCart = product => {
+  const addToCart = (product) => {
     const productIndex = order.findIndex(
       (orderProduct) => orderProduct.id === product.id
     );
@@ -37,14 +37,44 @@ export default function Main() {
     }
   };
 
-  const removeFromCart = productId => {
-    const newOrder = order.filter(product => product.id !== productId);
+  const removeFromCart = (productId) => {
+    const newOrder = order.filter((product) => product.id !== productId);
     setOrder(newOrder);
-  }
+  };
+
+  const incQuantity = (productId) => {
+    const newOrder = order.map((product) => {
+      if (product.id === productId) {
+        const newQuantity = product.quantity + 1;
+        return {
+          ...product,
+          quantity: newQuantity,
+        };
+      } else {
+        return product;
+      }
+    });
+    setOrder(newOrder);
+  };
+
+  const decQuantity = (productId) => {
+    const newOrder = order.map((product) => {
+      if (product.id === productId) {
+        const newQuantity = product.quantity - 1;
+        return {
+          ...product,
+          quantity: newQuantity >= 0 ? newQuantity : 0,
+        };
+      } else {
+        return product;
+      }
+    });
+    setOrder(newOrder);
+  };
 
   const handleCartShow = () => {
     setCartShow(!isCartShow);
-  }
+  };
 
   useEffect(function getProducts() {
     fetch(API_URL, {
@@ -63,8 +93,20 @@ export default function Main() {
     <main>
       <div className="container">
         <Cart quantity={order.length} handleCartShow={handleCartShow} />
-        {isCartShow && <CartList order={order} handleCartShow={handleCartShow} removeFromCart={removeFromCart}/>}
-        {loading ? <Preloader /> : <Products products={products} addToCart={addToCart} />}
+        {isCartShow && (
+          <CartList
+            order={order}
+            handleCartShow={handleCartShow}
+            removeFromCart={removeFromCart}
+            incQuantity={incQuantity}
+            decQuantity={decQuantity}
+          />
+        )}
+        {loading ? (
+          <Preloader />
+        ) : (
+          <Products products={products} addToCart={addToCart} />
+        )}
       </div>
     </main>
   );

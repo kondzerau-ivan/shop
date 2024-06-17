@@ -77,6 +77,11 @@ body {
   cursor: pointer;
 }
 
+.cart-item__quantity {
+  cursor: pointer;
+  vertical-align: middle;
+}
+
 @keyframes show {
   from {
     top: 70%;
