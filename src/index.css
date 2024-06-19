@@ -58,6 +58,17 @@ body {
   animation: show 500ms ease-in-out;
 }
 
+@keyframes show {
+  from {
+    top: 70%;
+    opacity: 0;
+  }
+  to {
+    top: 50%;
+    opacity: 1;
+  }
+}
+
 .cart-close {
   position: absolute;
   top: 1.1rem;
@@ -82,14 +93,20 @@ body {
   vertical-align: middle;
 }
 
-@keyframes show {
+#toast-container {
+  top: 2.5rem;
+ 
+  animation: toast 250ms ease-in-out;
+}
+
+@keyframes toast {
   from {
-    top: 70%;
     opacity: 0;
+    transform: translateY(2rem);
   }
   to {
-    top: 50%;
     opacity: 1;
+    transform: translateY(0);
   }
 }
 

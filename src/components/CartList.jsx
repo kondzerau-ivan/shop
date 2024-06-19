@@ -30,8 +30,9 @@ export default function CartList(props) {
         ) : (
           <li className="collection-item">Cart is empty!</li>
         )}
-        <li href="#!" className="collection-item active red darken-4">
+        <li href="#!" className="collection-item active red darken-4 valign-wrapper" style={{justifyContent: "space-between"}}>
           <strong>Total: {totalPrice}$</strong>
+          <button className="btn white red-text text-darken-4">Checkout</button>
         </li>
       </ul>
       <i

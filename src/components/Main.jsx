@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { API_KEY, API_URL } from "../config";
-
 import Preloader from "./Preloader";
 import Products from "./Products";
 import Cart from "./Cart";
 import CartList from "./CartList";
+import Alert from "./Alert";
 
 export default function Main() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState([]);
   const [isCartShow, setCartShow] = useState(false);
+  const [alertName, setAlertName] = useState('');
 
   const addToCart = (product) => {
     const productIndex = order.findIndex(
@@ -35,6 +36,7 @@ export default function Main() {
       });
       setOrder(newOrder);
     }
+    setAlertName(product.name)
   };
 
   const removeFromCart = (productId) => {
@@ -76,6 +78,10 @@ export default function Main() {
     setCartShow(!isCartShow);
   };
 
+  const closeAlert = () => {
+    setAlertName('');
+  }
+
   useEffect(function getProducts() {
     fetch(API_URL, {
       headers: {
@@ -107,6 +113,9 @@ export default function Main() {
         ) : (
           <Products products={products} addToCart={addToCart} />
         )}
+        {
+          alertName && <Alert name={alertName} closeAlert={closeAlert} />
+        }
       </div>
     </main>
   );
