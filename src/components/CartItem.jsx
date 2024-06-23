@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { ShopContext } from "../context";
+
 export default function CartItem(props) {
   const {
     id,
@@ -8,15 +11,25 @@ export default function CartItem(props) {
     incQuantity = Function.prototype,
     decQuantity = Function.prototype,
   } = props;
+
+  const { example } = useContext(ShopContext);
+  console.log(example);
+
   return (
     <li className="collection-item">
       {name}{" "}
       <strong>
-        <i className="material-icons red-text text-darken-4 cart-item__quantity" onClick={() => decQuantity(id)}>
+        <i
+          className="material-icons red-text text-darken-4 cart-item__quantity"
+          onClick={() => decQuantity(id)}
+        >
           remove
         </i>
         x{quantity}
-        <i className="material-icons red-text text-darken-4 cart-item__quantity" onClick={() => incQuantity(id)}>
+        <i
+          className="material-icons red-text text-darken-4 cart-item__quantity"
+          onClick={() => incQuantity(id)}
+        >
           add
         </i>
       </strong>{" "}
