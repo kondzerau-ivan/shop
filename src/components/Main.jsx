@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { API_KEY, API_URL } from "../config";
+
+import { ShopContext } from "../context";
 
 import Preloader from "./Preloader";
 import Products from "./Products";
@@ -8,80 +10,8 @@ import CartList from "./CartList";
 import Alert from "./Alert";
 
 export default function Main() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [order, setOrder] = useState([]);
-  const [isCartShow, setCartShow] = useState(false);
-  const [alertName, setAlertName] = useState('');
-
-  const addToCart = (product) => {
-    const productIndex = order.findIndex(
-      (orderProduct) => orderProduct.id === product.id
-    );
-    if (productIndex < 0) {
-      const newProduct = {
-        ...product,
-        quantity: 1,
-      };
-      setOrder([...order, newProduct]);
-    } else {
-      const newOrder = order.map((orderProduct, index) => {
-        if (index === productIndex) {
-          return {
-            ...orderProduct,
-            quantity: orderProduct.quantity + 1,
-          };
-        } else {
-          return orderProduct;
-        }
-      });
-      setOrder(newOrder);
-    }
-    setAlertName(product.name)
-  };
-
-  const removeFromCart = (productId) => {
-    const newOrder = order.filter((product) => product.id !== productId);
-    setOrder(newOrder);
-  };
-
-  const incQuantity = (productId) => {
-    const newOrder = order.map((product) => {
-      if (product.id === productId) {
-        const newQuantity = product.quantity + 1;
-        return {
-          ...product,
-          quantity: newQuantity,
-        };
-      } else {
-        return product;
-      }
-    });
-    setOrder(newOrder);
-  };
-
-  const decQuantity = (productId) => {
-    const newOrder = order.map((product) => {
-      if (product.id === productId) {
-        const newQuantity = product.quantity - 1;
-        return {
-          ...product,
-          quantity: newQuantity >= 0 ? newQuantity : 0,
-        };
-      } else {
-        return product;
-      }
-    });
-    setOrder(newOrder);
-  };
-
-  const handleCartShow = () => {
-    setCartShow(!isCartShow);
-  };
-
-  const closeAlert = () => {
-    setAlertName('');
-  }
+  const { setProducts, loading, order, isCartShow, alertName } =
+    useContext(ShopContext);
 
   useEffect(function getProducts() {
     fetch(API_URL, {
@@ -91,32 +21,18 @@ export default function Main() {
     })
       .then((response) => response.json())
       .then((data) => {
-        data.featured && setProducts(data.featured.filter(e => e.type === 'sparks_song'));
-        setLoading(false);
+        data.featured &&
+          setProducts(data.featured.filter((e) => e.type === "sparks_song"));
       });
   }, []);
 
   return (
     <main>
       <div className="container">
-        <Cart quantity={order.length} handleCartShow={handleCartShow} />
-        {isCartShow && (
-          <CartList
-            order={order}
-            handleCartShow={handleCartShow}
-            removeFromCart={removeFromCart}
-            incQuantity={incQuantity}
-            decQuantity={decQuantity}
-          />
-        )}
-        {loading ? (
-          <Preloader />
-        ) : (
-          <Products products={products} addToCart={addToCart} />
-        )}
-        {
-          alertName && <Alert name={alertName} closeAlert={closeAlert} />
-        }
+        <Cart quantity={order.length} />
+        {isCartShow && <CartList />}
+        {loading ? <Preloader /> : <Products />}
+        {alertName && <Alert />}
       </div>
     </main>
   );

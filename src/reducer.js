@@ -1,9 +1,16 @@
 export default function reducer(state, { type, payload }) {
   switch (type) {
+    case 'SET_PRODUCTS':
+      return {
+        ...state,
+        products: payload || [],
+        loading: false
+      }
     case 'ADD_TO_CART': {
       const productIndex = state.order.findIndex(
         (orderProduct) => orderProduct.id === payload.id
       );
+
       let newOrder = null;
       if (productIndex < 0) {
         const newProduct = {
@@ -23,11 +30,10 @@ export default function reducer(state, { type, payload }) {
           }
         });
       }
-
       return {
         ...state,
         order: newOrder,
-        alertName: payload.name
+        alertName: payload.name,
       }
     }
     case 'REMOVE_FROM_CART':
