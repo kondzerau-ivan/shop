@@ -7,7 +7,7 @@ export default function Products(props) {
   return(
     <div className="products">
       {products.map(product => (
-        <Product key={product.id} {...product} addToCart={addToCart} />
+        <Product key={product.offer} {...product} addToCart={addToCart} />
       ))}
     </div>
   );

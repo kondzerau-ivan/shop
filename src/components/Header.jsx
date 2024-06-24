@@ -5,7 +5,7 @@ export default function Header() {
         <div className="container">
           <div className="nav-wrapper">
             <a href="/" className="brand-logo">
-              React Shop
+              React Music Shop
             </a>
           </div>
         </div>

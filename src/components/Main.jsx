@@ -91,7 +91,7 @@ export default function Main() {
     })
       .then((response) => response.json())
       .then((data) => {
-        data.featured && setProducts(data.featured.slice(0, 16));
+        data.featured && setProducts(data.featured.filter(e => e.type === 'sparks_song'));
         setLoading(false);
       });
   }, []);
